@@ -26,6 +26,9 @@ public class Alumettes {
 							int numbRm = Integer.parseInt(numberTakeString);
 							if (verifRemove(numbRm, numberRest) != 0) {
 								numberRest -= numbRm;
+								if (numberRest == 0) {
+									System.out.println("Le joueur: "+player+" . À perdu");
+								}
 								if (player == 2) {
 									player = 1;
 								} else {
@@ -37,7 +40,7 @@ public class Alumettes {
 						} else {
 							System.out.println("J'attends une valeur en chiffre");
 						}
-					} while (numberRest > 1);
+					} while (numberRest > 0);
 				} else {
 					System.out.println("Merci de saisir 1 joueur ou 2 joueurs");
 				}
