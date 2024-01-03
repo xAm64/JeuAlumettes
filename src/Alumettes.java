@@ -1,6 +1,8 @@
 import java.util.IllegalFormatCodePointException;
 import java.util.Scanner;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.RestoreAction;
+
 public class Alumettes {
 
 	public static void main(String[] args) {
@@ -20,7 +22,11 @@ public class Alumettes {
 					int player = 1;
 					do {
 						System.out.println("Allumettes restantes "+viewAllumettes(numberRest, numbersAlumettes));
-						System.out.println("Au tour du joueur: "+player+" . Combien d'alumettes voulez-vous prendre ? (de 1 à 4)");
+						if (numberRest >= 4) {
+							System.out.println("Au tour du joueur: "+player+" . Combien d'alumettes voulez-vous prendre ? (de 1 à 4)");
+						} else {
+							System.out.println("Au tour du joueur: "+player+" . Combien d'alumettes voulez-vous prendre ? (de 1 à "+numberRest+")");
+						}
 						String numberTakeString = scn.nextLine();
 						if (verifInt(numberTakeString)) {
 							int numbRm = Integer.parseInt(numberTakeString);
