@@ -1,3 +1,4 @@
+import java.util.IllegalFormatCodePointException;
 import java.util.Scanner;
 
 public class Alumettes {
@@ -16,7 +17,27 @@ public class Alumettes {
 				if (Integer.parseInt(numberPlayerString) == 1) {
 					System.out.println("Joueur contre ordinateur");
 				} else if (Integer.parseInt(numberPlayerString) == 2) {
-					System.out.println("Joueur contre joueur");
+					int player = 1;
+					do {
+						System.out.println("Allumettes restantes "+viewAllumettes(numberRest, numbersAlumettes));
+						System.out.println("Au tour du joueur: "+player+" . Combien d'alumettes voulez-vous prendre ? (de 1 à 4)");
+						String numberTakeString = scn.nextLine();
+						if (verifInt(numberTakeString)) {
+							int numbRm = Integer.parseInt(numberTakeString);
+							if (verifRemove(numbRm, numberRest) != 0) {
+								numberRest -= numbRm;
+								if (player == 2) {
+									player = 1;
+								} else {
+									player ++;
+								}
+							} else {
+								System.out.println("Opération non conforme");
+							}
+						} else {
+							System.out.println("J'attends une valeur en chiffre");
+						}
+					} while (numberRest > 1);
 				} else {
 					System.out.println("Merci de saisir 1 joueur ou 2 joueurs");
 				}
@@ -36,6 +57,17 @@ public class Alumettes {
 			out = true;
 		}
 		return out;
+	}
+	private static int verifRemove(int numberRemove, int numberRest) {
+		if (numberRemove >= 1 && numberRemove <= 4) {
+			if (numberRemove <= numberRest) {
+				return numberRemove;
+			} else {
+				return 0;
+			}
+		} else {
+			return 0;
+		}
 	}
 	
 	private static String viewAllumettes(int numbersAlumettes, int numberTotalAlumettes) {
