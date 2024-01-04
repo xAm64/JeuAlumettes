@@ -1,60 +1,103 @@
 import java.util.IllegalFormatCodePointException;
 import java.util.Scanner;
-
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane.RestoreAction;
-
 public class Alumettes {
-
 	public static void main(String[] args) {
-		int numbersAlumettes = 21, numberRest = 21;
+		//initialise le nombre d'alumettes
+		int numbersAlumettes = 21, numberRest = numbersAlumettes;
 		String replay = "non";
 		Scanner scn = new Scanner(System.in);
 		System.out.println("Exercice 2 Les alumettes");
 		System.out.println("voici les alumettes "+viewAllumettes(numbersAlumettes, numbersAlumettes));
-		System.out.println("1joueur ou 2 joueurs ?");
-		String numberPlayerString = scn.nextLine();
+		//démarre le jeu
 		do {
+			//initialise le jeu.
+			System.out.println("1joueur ou 2 joueurs ?");
+			String numberPlayerString = scn.nextLine();
 			numberRest = numbersAlumettes;
+			//vérif de saisie.
 			if (verifInt(numberPlayerString)) {
+				//lance le jeu contre l'ordinateur
 				if (Integer.parseInt(numberPlayerString) == 1) {
-					System.out.println("Joueur contre ordinateur");
+					System.out.println("Je prends la place d'un joueur");
+					int placePlayer = (int) (Math.random() * (2))+1, player = 1;
+					do {
+						System.out.println("Allumettes restantes "+viewAllumettes(numberRest, numbersAlumettes));
+						if (placePlayer == player) {
+							System.out.println("C'est à votre tour");
+							if (numberRest >= 4) {
+								System.out.println("Au tour du joueur: "+player+" . Combien d'alumettes voulez-vous prendre ? (de 1 à 4)");
+							} else {
+								System.out.println("Au tour du joueur: "+player+" . Combien d'alumettes voulez-vous prendre ? (de 1 à "+numberRest+")");
+							}
+							String numberTakeString = scn.nextLine();
+							if (verifInt(numberTakeString)) {
+								int numbRm = Integer.parseInt(numberTakeString);
+								if (verifRemove(numbRm, numberRest) != 0) {
+									//enlève le nombre d'alumettes choisis par l'utilisateur
+									numberRest -= numbRm;
+									if (numberRest == 0) {
+										System.out.println("J'ai gagné");
+									}
+								} else {
+									System.out.println("La valeur doit être écrite en chiffre");
+								}
+							} else {
+							System.out.println("C'est à mon tour");
+							}
+						}
+					} while (numberRest > 0);
+				// 2 joueurs
 				} else if (Integer.parseInt(numberPlayerString) == 2) {
 					int player = 1;
+					//début du jeu
 					do {
+						//gère les alumettes restantes
 						System.out.println("Allumettes restantes "+viewAllumettes(numberRest, numbersAlumettes));
 						if (numberRest >= 4) {
 							System.out.println("Au tour du joueur: "+player+" . Combien d'alumettes voulez-vous prendre ? (de 1 à 4)");
 						} else {
 							System.out.println("Au tour du joueur: "+player+" . Combien d'alumettes voulez-vous prendre ? (de 1 à "+numberRest+")");
 						}
+						//écoute du joueur pour prendre X alumette(s)
 						String numberTakeString = scn.nextLine();
+						//vérifie que l'utilisateur écris un chiffre
 						if (verifInt(numberTakeString)) {
+							//convertir le string en int
 							int numbRm = Integer.parseInt(numberTakeString);
+							//Vérifie que le joueur respecte la règle (si pas respecter ça envera 0)
 							if (verifRemove(numbRm, numberRest) != 0) {
+								//enlève le nombre d'alumettes choisis par l'utilisateur
 								numberRest -= numbRm;
+								//si il en reste 0, ça enverra le message de perdu.
 								if (numberRest == 0) {
 									System.out.println("Le joueur: "+player+" . À perdu");
 								}
+								//alterne entre joueur 1 et 2.
 								if (player == 2) {
 									player = 1;
 								} else {
 									player ++;
 								}
+							//l'utilisateur essaye de tricher.
 							} else {
-								System.out.println("Opération non conforme");
+								System.out.println("Opération refusé, car non conforme aux règles");
 							}
 						} else {
-							System.out.println("J'attends une valeur en chiffre");
+							System.out.println("La valeur doit être écrite en chiffre");
 						}
 					} while (numberRest > 0);
+				// autre chose, le jeu ne se lance pas.
 				} else {
 					System.out.println("Merci de saisir 1 joueur ou 2 joueurs");
 				}
+			//cas de saisie autre que des chiffres.
 			} else {
 				System.out.println("Appuyer sur 1 pour jouer contre l'ordinateur ou 2 pour jouer à 2");
 			}
 			System.out.println("Recommencer ?");
 			replay = scn.nextLine();
+		//permet de relancer le jeu autant de fois que l'utilisateur le voudra.
 		}while (replay.equals("oui"));
 		System.out.println("Au revoir");
 	}
