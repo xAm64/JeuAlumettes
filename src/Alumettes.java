@@ -19,9 +19,9 @@ public class Alumettes {
 			if (verifInt(numberPlayerString)) {
 				//lance le jeu contre l'ordinateur
 				if (Integer.parseInt(numberPlayerString) == 1) {
-					System.out.println("Je prends la place d'un joueur");
 					//génère qui commence aléatoirement
 					int placePlayer = (int) (Math.random() * (2))+1, player = 1;
+					System.out.println("À cette partie, vous êtes le joueur: "+placePlayer+".");
 					do {
 						System.out.println("Allumettes restantes "+viewAllumettes(numberRest, numbersAlumettes));
 						//tour du joueur.
@@ -47,26 +47,25 @@ public class Alumettes {
 										player = 1;
 									}
 								} else {
-									System.out.println("La valeur doit être écrite en chiffre");
+									System.out.println("C'est pas bien de tricher!");
 								}
 							} else {
-							System.out.println("C'est à mon tour");
+								System.out.println("La valeur doit être écrite en chiffre");
 							}
 						//tour de l'ordinateur
 						} else {
+							System.out.println("C'est à mon tour");
 							int takeAlumettes = 0;
 							if (numberRest >= 4) {
-								if (numberRest >= 4) {
-									takeAlumettes = (int) (Math.random() * (4))+1;
-								} else {
-									takeAlumettes = (int) (Math.random() * (numberRest))+1;
-								}
+								takeAlumettes = (int) (Math.random() * (4))+1;
+							} else {
+								takeAlumettes = (int) (Math.random() * (numberRest))+1;
 							}
 							numberRest -= takeAlumettes;
 							if (takeAlumettes > 1) {
-								System.out.println("Je prends: "+takeAlumettes+" alumette");
-							} else {
 								System.out.println("Je prends: "+takeAlumettes+" alumettes");
+							} else {
+								System.out.println("Je prends: "+takeAlumettes+" alumette");
 							}
 							if (numberRest == 0) {
 								System.out.println("Félicitations, vous m'avez battu");
@@ -86,9 +85,9 @@ public class Alumettes {
 						//gère les alumettes restantes
 						System.out.println("Allumettes restantes "+viewAllumettes(numberRest, numbersAlumettes));
 						if (numberRest >= 4) {
-							System.out.println("Au tour du joueur: "+player+" . Combien d'alumettes voulez-vous prendre ? (de 1 à 4)");
+							System.out.println("Combien d'alumettes voulez-vous prendre ? (de 1 à 4)");
 						} else {
-							System.out.println("Au tour du joueur: "+player+" . Combien d'alumettes voulez-vous prendre ? (de 1 à "+numberRest+")");
+							System.out.println("Combien d'alumettes voulez-vous prendre ? (de 1 à "+numberRest+")");
 						}
 						//écoute du joueur pour prendre X alumette(s)
 						String numberTakeString = scn.nextLine();
