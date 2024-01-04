@@ -20,9 +20,11 @@ public class Alumettes {
 				//lance le jeu contre l'ordinateur
 				if (Integer.parseInt(numberPlayerString) == 1) {
 					System.out.println("Je prends la place d'un joueur");
+					//génère qui commence aléatoirement
 					int placePlayer = (int) (Math.random() * (2))+1, player = 1;
 					do {
 						System.out.println("Allumettes restantes "+viewAllumettes(numberRest, numbersAlumettes));
+						//tour du joueur.
 						if (placePlayer == player) {
 							System.out.println("C'est à votre tour");
 							if (numberRest >= 4) {
@@ -39,11 +41,40 @@ public class Alumettes {
 									if (numberRest == 0) {
 										System.out.println("J'ai gagné");
 									}
+									if (player != 2) {
+										player ++;
+									} else {
+										player = 1;
+									}
 								} else {
 									System.out.println("La valeur doit être écrite en chiffre");
 								}
 							} else {
 							System.out.println("C'est à mon tour");
+							}
+						//tour de l'ordinateur
+						} else {
+							int takeAlumettes = 0;
+							if (numberRest >= 4) {
+								if (numberRest >= 4) {
+									takeAlumettes = (int) (Math.random() * (4))+1;
+								} else {
+									takeAlumettes = (int) (Math.random() * (numberRest))+1;
+								}
+							}
+							numberRest -= takeAlumettes;
+							if (takeAlumettes > 1) {
+								System.out.println("Je prends: "+takeAlumettes+" alumette");
+							} else {
+								System.out.println("Je prends: "+takeAlumettes+" alumettes");
+							}
+							if (numberRest == 0) {
+								System.out.println("Félicitations, vous m'avez battu");
+							}
+							if (player != 2) {
+								player ++;
+							} else {
+								player = 1;
 							}
 						}
 					} while (numberRest > 0);
